@@ -26,6 +26,10 @@
       </tbody>
     </table>
 
+      <div style="font-size: 18px;">
+        sum-hashrate : <span id="sum-hashrate">0</span><br>
+        sum-balance : <span id="sum-balance">0</span>
+      </div>
 
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -53,6 +57,21 @@
       };
       xhttp.open("GET", "/miners", true);
       xhttp.send();
+
+
+      var xhttp2 = new XMLHttpRequest();
+      xhttp2.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
+          var info = JSON.parse(this.responseText);
+          var sum_hashrate = info.hashrate;
+          var sum_balance = info.balance;
+          $('#sum-hashrate').text(sum_hashrate);
+          $('#sum-balance').text(sum_balance);
+        }
+      };
+      xhttp2.open("GET", "/miners/info", true);
+      xhttp2.send();
     }
     loadDoc();
     </script>
