@@ -13,6 +13,7 @@ router.post('/:miner_name/:hashrate/:balance', function(req, res, next) {
     if(miner_arr[i].miner_name === req.params.miner_name) {  // renew miner info
       miner_arr[i].hashrate = req.params.hashrate;
       miner_arr[i].balance = req.params.balance;
+      miner_arr[i].sync_time = new Date().getTime();
 
       res.json(miner_arr[i]);
       return;
@@ -24,6 +25,7 @@ router.post('/:miner_name/:hashrate/:balance', function(req, res, next) {
   obj.miner_name = req.params.miner_name;
   obj.hashrate = req.params.hashrate;
   obj.balance = req.params.balance;
+  obj.sync_time = new Date().getTime();
   miner_arr.push(obj);
 
   res.json(obj);
