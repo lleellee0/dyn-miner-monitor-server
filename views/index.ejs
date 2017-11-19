@@ -1,11 +1,58 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>dyn-miner-monitor</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <table id="miner_list">
+      <thead>
+        <th>
+          miner_name
+        </th>
+        <th>
+          hashrate
+        </th>
+        <th>
+          balance
+        </th>
+        <th>
+          sync_time
+        </th>
+      </thead>
+      <tbody id="target">
+
+      </tbody>
+    </table>
+
+
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <script>
+    function loadDoc() {
+      var dt = $('#miner_list').DataTable();
+
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
+          var miner_array = JSON.parse(this.responseText);
+
+          for(let i = 0; i < miner_array.length; i++) {
+            dt.row.add([miner_array[i].miner_name,
+             miner_array[i].hashrate,
+             miner_array[i].balance,
+             miner_array[i].sync_time]).draw(false);
+          }
+        }
+      };
+      xhttp.open("GET", "/miners", true);
+      xhttp.send();
+    }
+    loadDoc();
+    </script>
   </body>
 </html>
