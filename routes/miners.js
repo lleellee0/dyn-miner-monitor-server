@@ -51,8 +51,8 @@ router.post('/:miner_name/:hashrate/:balance', function(req, res, next) {
 
 const checkDeadMiner = () => {
   for(let i = 0; i < miner_arr.length; i++) {
-    if(miner_array[i].sync_time < Date.now() - (120 * 1000)) // 120초 지났다면 죽은걸로 간주 (60초마다 싱크하긴 하지만 충분한 유예시간을 부여)
-    miner_array[i].is_dead = true;
+    if(miner_arr[i].sync_time < Date.now() - (120 * 1000)) // 120초 지났다면 죽은걸로 간주 (60초마다 싱크하긴 하지만 충분한 유예시간을 부여)
+    miner_arr[i].is_dead = true;
   }
 }
 
