@@ -48,10 +48,12 @@
           var miner_array = JSON.parse(this.responseText);
 
           for(let i = 0; i < miner_array.length; i++) {
-            dt.row.add([miner_array[i].miner_name,
+            var rowNode = dt.row.add([miner_array[i].miner_name,
              miner_array[i].hashrate,
              miner_array[i].balance,
-             miner_array[i].sync_time]).draw(false);
+             miner_array[i].sync_time]).draw(false).node();
+            if(miner_array[i].is_dead === true)
+              $( rowNode ).css('color', 'red');
           }
         }
       };
